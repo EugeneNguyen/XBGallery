@@ -25,4 +25,3 @@ eugenenguyen, xuanbinh91@gmail.com
 ## License
 
 XBGallery is available under the MIT license. See the LICENSE file for more info.
-
