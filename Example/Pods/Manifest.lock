@@ -1,0 +1,17 @@
+PODS:
+  - FBSnapshotTestCase (1.4)
+  - XBGallery (0.1.0)
+
+DEPENDENCIES:
+  - FBSnapshotTestCase
+  - XBGallery (from `../`)
+
+EXTERNAL SOURCES:
+  XBGallery:
+    :path: ../
+
+SPEC CHECKSUMS:
+  FBSnapshotTestCase: f9f225b5ba11c8d8c09075590490df16314e4d62
+  XBGallery: b94ada2b0113ae2ac3969b0806a05cbcbe6cde18
+
+COCOAPODS: 0.34.4
