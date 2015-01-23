@@ -1,0 +1,11 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'XBGallery', :exclusive => true do
+  pod "XBGallery", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "XBGallery", :path => "../"
+
+  pod 'FBSnapshotTestCase'
+end
