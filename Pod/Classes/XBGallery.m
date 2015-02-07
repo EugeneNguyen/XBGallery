@@ -48,4 +48,21 @@ static XBGallery *__sharedXBGallery = nil;
     }];
 }
 
+- (NSURL *)urlForID:(int)imageid isThumbnail:(BOOL)isThumbnail
+{
+    NSString *path = [NSString stringWithFormat:@"%@/plusgallery/services/showbyid/%d/0/%d", self.host, imageid, isThumbnail];
+    return [NSURL URLWithString:path];
+}
+
+- (void)infomationForID:(int)imageid withCompletion:(XBGImageGetInformation)completeBlock
+{
+    NSString *path = [NSString stringWithFormat:@"showbyid/%d/1/1", imageid];
+    ASIFormDataRequest *request = service_gallery(path);
+    [request startAsynchronous];
+    __block ASIFormDataRequest *_request = request;
+    [request setCompletionBlock:^{
+        completeBlock(_request.responseJSON);
+    }];
+}
+
 @end
