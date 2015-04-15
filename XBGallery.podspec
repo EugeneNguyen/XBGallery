@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "XBGallery"
-  s.version          = "0.2.1"
+  s.version          = "0.2.2"
   s.summary          = "A library allow upload & manage image using plus gallery server"
   s.description      = <<-DESC
                        A library allow upload & manage image using plus gallery server. server side code will be provide in 2 weeks.

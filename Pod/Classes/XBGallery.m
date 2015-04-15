@@ -54,6 +54,12 @@ static XBGallery *__sharedXBGallery = nil;
     return [NSURL URLWithString:path];
 }
 
+- (NSURL *)urlForID:(int)imageid size:(CGSize)size
+{
+    NSString *path = [NSString stringWithFormat:@"%@/plusgallery/services/showbyid?id=%d&width=%f&height=%f", self.host, imageid, size.width, size.height];
+    return [NSURL URLWithString:path];
+}
+
 - (void)infomationForID:(int)imageid withCompletion:(XBGImageGetInformation)completeBlock
 {
     NSString *path = [NSString stringWithFormat:@"showbyid/%d/1/1", imageid];

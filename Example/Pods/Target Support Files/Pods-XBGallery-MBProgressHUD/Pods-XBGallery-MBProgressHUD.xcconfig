@@ -1,1 +1,0 @@
-PODS_XBGALLERY_MBPROGRESSHUD_OTHER_LDFLAGS = -framework "CoreGraphics"
