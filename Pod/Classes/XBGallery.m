@@ -7,10 +7,7 @@
 //
 
 #import "XBGallery.h"
-#import "ASIFormDataRequest.h"
-#import "XBMobile.h"
-
-#define service_gallery(X) [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/plusgallery/services/%@", host, X]]]
+#import "XBCacheRequest.h"
 
 static XBGallery *__sharedXBGallery = nil;
 
@@ -28,23 +25,23 @@ static XBGallery *__sharedXBGallery = nil;
 
 - (void)uploadImage:(UIImage *)image withCompletion:(XBGImageUploaded)completeBlock
 {
-    ASIFormDataRequest *request = service_gallery(@"addphoto");
-    [request addData:UIImageJPEGRepresentation(image, 0.7) withFileName:@"image.jpeg" andContentType:@"image/jpeg" forKey:@"uploadimg"];
-    [request startAsynchronous];
-    __block ASIFormDataRequest *_request = request;
-    [request setCompletionBlock:^{
-        completeBlock(_request.responseJSON);
+    NSString *url = [NSString stringWithFormat:@"%@/plusgallery/services/addphoto", host];
+    XBCacheRequest *request = XBCacheRequest(url);
+    [request addFileWithData:UIImageJPEGRepresentation([self fixOrientation:image], 0.7) key:@"uploadimg" fileName:@"image.jpeg" mimeType:@"image/jpeg"];
+    request.disableCache = YES;
+    [request startAsynchronousWithCallback:^(XBCacheRequest *request, NSString *result, BOOL fromCache, NSError *error, id object) {
+        completeBlock(object);
     }];
 }
 
 - (void)uploadImageURL:(NSString *)url withCompletion:(XBGImageUploaded)completeBlock
 {
-    ASIFormDataRequest *request = service_gallery(@"addphoto");
-    [request setPostValue:url forKey:@"url"];
-    [request startAsynchronous];
-    __block ASIFormDataRequest *_request = request;
-    [request setCompletionBlock:^{
-        completeBlock(_request.responseJSON);
+    NSString *urlRequest = [NSString stringWithFormat:@"%@/plusgallery/services/addphoto", host];
+    XBCacheRequest *request = XBCacheRequest(urlRequest);
+    [request setDataPost:[@{@"url": url} mutableCopy]];
+    request.disableCache = YES;
+    [request startAsynchronousWithCallback:^(XBCacheRequest *request, NSString *result, BOOL fromCache, NSError *error, id object) {
+        completeBlock(object);
     }];
 }
 
@@ -62,13 +59,93 @@ static XBGallery *__sharedXBGallery = nil;
 
 - (void)infomationForID:(int)imageid withCompletion:(XBGImageGetInformation)completeBlock
 {
-    NSString *path = [NSString stringWithFormat:@"showbyid/%d/1/1", imageid];
-    ASIFormDataRequest *request = service_gallery(path);
-    [request startAsynchronous];
-    __block ASIFormDataRequest *_request = request;
-    [request setCompletionBlock:^{
-        completeBlock(_request.responseJSON);
+    NSString *path = [NSString stringWithFormat:@"%@/plusgallery/services/showbyid/%d/1/1", host, imageid];
+    XBCacheRequest *request = XBCacheRequest(path);
+    request.disableCache = YES;
+    [request startAsynchronousWithCallback:^(XBCacheRequest *request, NSString *result, BOOL fromCache, NSError *error, id object) {
+        completeBlock(object);
     }];
+}
+
+- (UIImage *)fixOrientation:(UIImage *)image
+{
+    
+    // No-op if the orientation is already correct
+    if (image.imageOrientation == UIImageOrientationUp) return image;
+    
+    // We need to calculate the proper transformation to make the image upright.
+    // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    
+    switch (image.imageOrientation) {
+        case UIImageOrientationDown:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, image.size.width, image.size.height);
+            transform = CGAffineTransformRotate(transform, M_PI);
+            break;
+            
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+            transform = CGAffineTransformTranslate(transform, image.size.width, 0);
+            transform = CGAffineTransformRotate(transform, M_PI_2);
+            break;
+            
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, 0, image.size.height);
+            transform = CGAffineTransformRotate(transform, -M_PI_2);
+            break;
+        case UIImageOrientationUp:
+        case UIImageOrientationUpMirrored:
+            break;
+    }
+    
+    switch (image.imageOrientation) {
+        case UIImageOrientationUpMirrored:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, image.size.width, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+            
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, image.size.height, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+        case UIImageOrientationUp:
+        case UIImageOrientationDown:
+        case UIImageOrientationLeft:
+        case UIImageOrientationRight:
+            break;
+    }
+    
+    // Now we draw the underlying CGImage into a new context, applying the transform
+    // calculated above.
+    CGContextRef ctx = CGBitmapContextCreate(NULL, image.size.width, image.size.height,
+                                             CGImageGetBitsPerComponent(image.CGImage), 0,
+                                             CGImageGetColorSpace(image.CGImage),
+                                             CGImageGetBitmapInfo(image.CGImage));
+    CGContextConcatCTM(ctx, transform);
+    switch (image.imageOrientation) {
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            // Grr...
+            CGContextDrawImage(ctx, CGRectMake(0,0,image.size.height,image.size.width), image.CGImage);
+            break;
+            
+        default:
+            CGContextDrawImage(ctx, CGRectMake(0,0,image.size.width,image.size.height), image.CGImage);
+            break;
+    }
+    
+    // And now we just create a new UIImage from the drawing context
+    CGImageRef cgimg = CGBitmapContextCreateImage(ctx);
+    UIImage *img = [UIImage imageWithCGImage:cgimg];
+    CGContextRelease(ctx);
+    CGImageRelease(cgimg);
+    return img;
 }
 
 @end
