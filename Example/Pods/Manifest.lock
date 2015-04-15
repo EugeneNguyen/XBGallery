@@ -20,29 +20,18 @@ PODS:
   - AFNetworking/UIKit (2.5.2):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - ASIHTTPRequest (1.8.2):
-    - ASIHTTPRequest/ASIWebPageRequest
-    - ASIHTTPRequest/CloudFiles
-    - ASIHTTPRequest/Core
-    - ASIHTTPRequest/S3
-  - ASIHTTPRequest/ASIWebPageRequest (1.8.2):
-    - ASIHTTPRequest/Core
-  - ASIHTTPRequest/CloudFiles (1.8.2):
-    - ASIHTTPRequest/Core
-  - ASIHTTPRequest/Core (1.8.2):
-    - Reachability
-  - ASIHTTPRequest/S3 (1.8.2):
-    - ASIHTTPRequest/Core
   - FBSnapshotTestCase (1.6)
   - JSONKit-NoWarning (1.2)
   - MBProgressHUD (0.9.1)
-  - Reachability (3.2)
+  - SDWebImage (3.7.2):
+    - SDWebImage/Core
+  - SDWebImage/Core (3.7.2)
   - XBCacheRequest (0.5.1):
     - AFNetworking
     - JSONKit-NoWarning
     - MBProgressHUD
-  - XBGallery (0.2.2):
-    - ASIHTTPRequest
+  - XBGallery (0.3):
+    - SDWebImage
     - XBCacheRequest
 
 DEPENDENCIES:
@@ -55,12 +44,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: fefbce9660acb17f48ae0011292d4da0f457bf36
-  ASIHTTPRequest: ec013992946676b7978dcbde6396d57312d21db4
   FBSnapshotTestCase: 9d5fe43b29ae3a0ed8fc829477971b281038f748
   JSONKit-NoWarning: 3d27e6f9e6846ecf741e8c64dcadd7d5aa7193cb
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
-  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
   XBCacheRequest: 747404759746fbf61b6f3cb7e5248d34034fb222
-  XBGallery: 0090974507358c1467ffed657a9c5a7cc8b22e2e
+  XBGallery: ce3939510c026fe392c34635a3b4be054e7bcac6
 
 COCOAPODS: 0.34.4

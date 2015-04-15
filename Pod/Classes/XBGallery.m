@@ -53,7 +53,8 @@ static XBGallery *__sharedXBGallery = nil;
 
 - (NSURL *)urlForID:(int)imageid size:(CGSize)size
 {
-    NSString *path = [NSString stringWithFormat:@"%@/plusgallery/services/showbyid?id=%d&width=%f&height=%f", self.host, imageid, size.width, size.height];
+    CGFloat screenScale = [[UIScreen mainScreen] scale];
+    NSString *path = [NSString stringWithFormat:@"%@/plusgallery/services/showbyid?id=%d&width=%f&height=%f", self.host, imageid, size.width * screenScale, size.height * screenScale];
     return [NSURL URLWithString:path];
 }
 
