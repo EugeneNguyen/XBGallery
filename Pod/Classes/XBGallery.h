@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import "NSObject+XBGallery.h"
+#import "UIImageView+XBGallery.h"
+
 typedef void (^XBGImageUploaded)(NSDictionary * responseData);
 typedef void (^XBGImageGetInformation)(NSDictionary * responseData);
 
