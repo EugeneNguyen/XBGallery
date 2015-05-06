@@ -11,5 +11,6 @@
 @interface UIImageView (XBGallery)
 
 - (void)loadImage:(int)imageId;
+- (void)loadImage:(int)imageId withIndicatorStyle:(UIActivityIndicatorViewStyle)style;
 
 @end

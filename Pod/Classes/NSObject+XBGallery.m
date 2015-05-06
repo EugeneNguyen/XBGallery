@@ -17,7 +17,10 @@
         
     } completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
         UIImage *newImage = [UIImage imageWithCGImage:image.CGImage scale:[[UIScreen mainScreen] scale] orientation:UIImageOrientationUp];
-        [self performSelector:selector withObject:newImage];
+        if ([self respondsToSelector:selector])
+        {
+            [self performSelectorOnMainThread:selector withObject:newImage waitUntilDone:YES];
+        }
     }];
 }
 
