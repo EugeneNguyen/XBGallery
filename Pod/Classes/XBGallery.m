@@ -47,7 +47,7 @@ static XBGallery *__sharedXBGallery = nil;
 
 - (NSURL *)urlForID:(int)imageid isThumbnail:(BOOL)isThumbnail
 {
-    NSString *path = [NSString stringWithFormat:@"%@/plusgallery/services/showbyid?id=%d", self.host, imageid];
+    NSString *path = [NSString stringWithFormat:@"%@/plusgallery/services/showbyid?id=%d&origin=%d", self.host, imageid, !isThumbnail];
     return [NSURL URLWithString:path];
 }
 
