@@ -11,6 +11,7 @@
 
 #import "NSObject+XBGallery.h"
 #import "UIImageView+XBGallery.h"
+#import "UIImage+XBGallery.h"
 
 typedef void (^XBGImageUploaded)(NSDictionary * responseData);
 typedef void (^XBGImageGetInformation)(NSDictionary * responseData);

@@ -158,6 +158,7 @@
 		B56DBA44D4718947C29F39FC /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8021EA4BA9532C32A673CE /* AFHTTPRequestOperationManager.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B5B820381CCC3ACCD54A5A0E /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 7656CC0427030C13C78AEB53 /* AFURLResponseSerialization.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B5C55589C525CDD93FB7F113 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AD00F71FA5CD5E43183B197B /* UIImageView+HighlightedWebCache.m */; settings = {COMPILER_FLAGS = "-fobjc-arc -DOS_OBJECT_USE_OBJC=0"; }; };
+		B6159FA81AFB57EC00CD5DB8 /* XBGImageResizer.m in Sources */ = {isa = PBXBuildFile; fileRef = B6159FA71AFB57EC00CD5DB8 /* XBGImageResizer.m */; };
 		B66E32F91ADEB6A00043A241 /* UIImageView+XBGallery.m in Sources */ = {isa = PBXBuildFile; fileRef = B66E32F81ADEB6A00043A241 /* UIImageView+XBGallery.m */; };
 		B6A9A0B0BE93F64EDCC81EEA /* FBSnapshotTestController.h in Headers */ = {isa = PBXBuildFile; fileRef = BC9D94863B08BED3698FBEDD /* FBSnapshotTestController.h */; };
 		B6D17246363E3DD52D931CEA /* UIAlertView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0A163212F67430371B3561 /* UIAlertView+AFNetworking.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -550,6 +551,8 @@
 		B4F9E45298AD8CC93A0C96E6 /* Pods-Tests-XBCacheRequest-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Tests-XBCacheRequest-Private.xcconfig"; sourceTree = "<group>"; };
 		B54EC590D173533F567FDDBF /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
 		B5C12F3B461200E83950F95A /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLRequestSerialization.h; path = AFNetworking/AFURLRequestSerialization.h; sourceTree = "<group>"; };
+		B6159FA61AFB57EB00CD5DB8 /* XBGImageResizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XBGImageResizer.h; path = Pod/Classes/XBGImageResizer.h; sourceTree = "<group>"; };
+		B6159FA71AFB57EC00CD5DB8 /* XBGImageResizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XBGImageResizer.m; path = Pod/Classes/XBGImageResizer.m; sourceTree = "<group>"; };
 		B66E32F71ADEB6A00043A241 /* UIImageView+XBGallery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+XBGallery.h"; path = "Pod/Classes/UIImageView+XBGallery.h"; sourceTree = "<group>"; };
 		B66E32F81ADEB6A00043A241 /* UIImageView+XBGallery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+XBGallery.m"; path = "Pod/Classes/UIImageView+XBGallery.m"; sourceTree = "<group>"; };
 		B994F907FA9DFB9AACD4036C /* XBMRequestCache.xcdatamodel */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcdatamodel; path = XBMRequestCache.xcdatamodel; sourceTree = "<group>"; };
@@ -1090,9 +1093,11 @@
 				87957BA920F80C5E86974263 /* NSObject+XBGallery.m */,
 				CEB51C925D5D17516BEADD09 /* XBGallery.h */,
 				E960611DD9F4BAA177CC1FD5 /* XBGallery.m */,
-				13497EF89302B5D7D1664553 /* Support Files */,
 				B66E32F71ADEB6A00043A241 /* UIImageView+XBGallery.h */,
 				B66E32F81ADEB6A00043A241 /* UIImageView+XBGallery.m */,
+				B6159FA61AFB57EB00CD5DB8 /* XBGImageResizer.h */,
+				B6159FA71AFB57EC00CD5DB8 /* XBGImageResizer.m */,
+				13497EF89302B5D7D1664553 /* Support Files */,
 			);
 			name = XBGallery;
 			path = ../..;
@@ -1802,6 +1807,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6159FA81AFB57EC00CD5DB8 /* XBGImageResizer.m in Sources */,
 				1B55E5CB44CC70AFF8205C6D /* Pods-Tests-dummy.m in Sources */,
 				B66E32F91ADEB6A00043A241 /* UIImageView+XBGallery.m in Sources */,
 			);
