@@ -13,6 +13,8 @@
 #import "UIImageView+XBGallery.h"
 #import "UIImage+XBGallery.h"
 
+@class XBCacheRequest;
+
 typedef void (^XBGImageUploaded)(NSDictionary * responseData);
 typedef void (^XBGImageGetInformation)(NSDictionary * responseData);
 
@@ -25,8 +27,8 @@ typedef void (^XBGImageGetInformation)(NSDictionary * responseData);
 
 + (XBGallery *)sharedInstance;
 
-- (void)uploadImage:(UIImage *)image withCompletion:(XBGImageUploaded)completeBlock;
-- (void)uploadImageURL:(NSString *)url withCompletion:(XBGImageUploaded)completeBlock;
+- (XBCacheRequest *)uploadImage:(UIImage *)image withCompletion:(XBGImageUploaded)completeBlock;
+- (XBCacheRequest *)uploadImageURL:(NSString *)url withCompletion:(XBGImageUploaded)completeBlock;
 
 - (NSURL *)urlForID:(int)imageid isThumbnail:(BOOL)isThumbnail;
 - (NSURL *)urlForID:(int)imageid size:(CGSize)size;

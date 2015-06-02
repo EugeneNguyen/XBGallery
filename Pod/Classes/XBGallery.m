@@ -23,18 +23,19 @@ static XBGallery *__sharedXBGallery = nil;
     return __sharedXBGallery;
 }
 
-- (void)uploadImage:(UIImage *)image withCompletion:(XBGImageUploaded)completeBlock
+- (XBCacheRequest *)uploadImage:(UIImage *)image withCompletion:(XBGImageUploaded)completeBlock
 {
     NSString *url = [NSString stringWithFormat:@"%@/plusgallery/services/addphoto", host];
     XBCacheRequest *request = XBCacheRequest(url);
-    [request addFileWithData:UIImageJPEGRepresentation([[image fixOrientation] resized], 0.9) key:@"uploadimg" fileName:@"image.jpeg" mimeType:@"image/jpeg"];
+    [request addFileWithData:UIImageJPEGRepresentation([[image fixOrientation] resized], 0.7) key:@"uploadimg" fileName:@"image.jpeg" mimeType:@"image/jpeg"];
     request.disableCache = YES;
     [request startAsynchronousWithCallback:^(XBCacheRequest *request, NSString *result, BOOL fromCache, NSError *error, id object) {
         completeBlock(object);
     }];
+    return request;
 }
 
-- (void)uploadImageURL:(NSString *)url withCompletion:(XBGImageUploaded)completeBlock
+- (XBCacheRequest *)uploadImageURL:(NSString *)url withCompletion:(XBGImageUploaded)completeBlock
 {
     NSString *urlRequest = [NSString stringWithFormat:@"%@/plusgallery/services/addphoto", host];
     XBCacheRequest *request = XBCacheRequest(urlRequest);
@@ -43,6 +44,7 @@ static XBGallery *__sharedXBGallery = nil;
     [request startAsynchronousWithCallback:^(XBCacheRequest *request, NSString *result, BOOL fromCache, NSError *error, id object) {
         completeBlock(object);
     }];
+    return request;
 }
 
 - (NSURL *)urlForID:(int)imageid isThumbnail:(BOOL)isThumbnail
