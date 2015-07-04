@@ -16,6 +16,7 @@
 @class XBCacheRequest;
 
 typedef void (^XBGImageUploaded)(NSDictionary * responseData);
+typedef void (^XBGMultipleImageUploaded)(NSArray * responseData);
 typedef void (^XBGImageGetInformation)(NSDictionary * responseData);
 
 @interface XBGallery : NSObject
@@ -29,6 +30,7 @@ typedef void (^XBGImageGetInformation)(NSDictionary * responseData);
 
 - (XBCacheRequest *)uploadImage:(UIImage *)image withCompletion:(XBGImageUploaded)completeBlock;
 - (XBCacheRequest *)uploadImageURL:(NSString *)url withCompletion:(XBGImageUploaded)completeBlock;
+- (XBCacheRequest *)uploadImages:(NSArray *)images withCompletion:(XBGMultipleImageUploaded)completeBlock;
 
 - (NSURL *)urlForID:(int)imageid isThumbnail:(BOOL)isThumbnail;
 - (NSURL *)urlForID:(int)imageid size:(CGSize)size;

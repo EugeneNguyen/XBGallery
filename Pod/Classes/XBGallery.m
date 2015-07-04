@@ -47,6 +47,41 @@ static XBGallery *__sharedXBGallery = nil;
     return request;
 }
 
+- (XBCacheRequest *)uploadImages:(NSArray *)images withCompletion:(XBGMultipleImageUploaded)completeBlock
+{
+    NSMutableArray *arrayImage = [@[] mutableCopy];
+    for (UIImage *img in images)
+    {
+        [arrayImage addObject:[@{@"image": img} mutableCopy]];
+    }
+    [self uploadImageOneByOne:arrayImage withComplete:completeBlock];
+}
+
+- (void)uploadImageOneByOne:(NSMutableArray *)arrayImage withComplete:(XBGMultipleImageUploaded)completeBlock
+{
+    BOOL found = NO;
+    for (NSMutableDictionary *information in arrayImage)
+    {
+        if (information[@"id"])
+        {
+            continue;
+        }
+        else
+        {
+            [self uploadImage:information[@"image"] withCompletion:^(NSDictionary *responseData) {
+                information[@"id"] = @([responseData[@"photo_id"] intValue]);
+                [self uploadImageOneByOne:arrayImage withComplete:completeBlock];
+            }];
+            found = YES;
+            break;
+        }
+    }
+    if (!found)
+    {
+        completeBlock([arrayImage valueForKey:@"id"]);
+    }
+}
+
 - (NSURL *)urlForID:(int)imageid isThumbnail:(BOOL)isThumbnail
 {
     NSString *path = [NSString stringWithFormat:@"%@/plusgallery/services/showbyid?id=%d&origin=%d", self.host, imageid, !isThumbnail];
