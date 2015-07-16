@@ -15,7 +15,7 @@
 
 @class XBCacheRequest;
 
-typedef void (^XBGImageUploaded)(NSDictionary * responseData);
+typedef void (^XBGImageUploaded)(NSDictionary * responseData, int imageID);
 typedef void (^XBGMultipleImageUploaded)(NSArray * responseData);
 typedef void (^XBGImageGetInformation)(NSDictionary * responseData);
 

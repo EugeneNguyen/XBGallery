@@ -30,7 +30,7 @@ static XBGallery *__sharedXBGallery = nil;
     [request addFileWithData:UIImageJPEGRepresentation([[image fixOrientation] resized], 0.7) key:@"uploadimg" fileName:@"image.jpeg" mimeType:@"image/jpeg"];
     request.disableCache = YES;
     [request startAsynchronousWithCallback:^(XBCacheRequest *request, NSString *result, BOOL fromCache, NSError *error, id object) {
-        completeBlock(object);
+        completeBlock(object, [object[@"photo_id"] intValue]);
     }];
     return request;
 }
@@ -42,7 +42,7 @@ static XBGallery *__sharedXBGallery = nil;
     [request setDataPost:[@{@"url": url} mutableCopy]];
     request.disableCache = YES;
     [request startAsynchronousWithCallback:^(XBCacheRequest *request, NSString *result, BOOL fromCache, NSError *error, id object) {
-        completeBlock(object);
+        completeBlock(object, [object[@"photo_id"] intValue]);
     }];
     return request;
 }
@@ -68,8 +68,8 @@ static XBGallery *__sharedXBGallery = nil;
         }
         else
         {
-            [self uploadImage:information[@"image"] withCompletion:^(NSDictionary *responseData) {
-                information[@"id"] = @([responseData[@"photo_id"] intValue]);
+            [self uploadImage:information[@"image"] withCompletion:^(NSDictionary *responseData, int photoid) {
+                information[@"id"] = @(photoid);
                 [self uploadImageOneByOne:arrayImage withComplete:completeBlock];
             }];
             found = YES;
