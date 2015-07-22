@@ -11,8 +11,18 @@
 
 static XBGallery *__sharedXBGallery = nil;
 
+@interface XBGallery ()
+{
+}
+@property (nonatomic, retain) NSMutableArray *arrayImage;
+@property (nonatomic, copy) XBGMultipleImageUploaded multiCompleteBlock;
+
+@end
+
 @implementation XBGallery
 @synthesize host;
+@synthesize arrayImage;
+@synthesize multiCompleteBlock;
 
 + (XBGallery *)sharedInstance
 {
@@ -47,14 +57,15 @@ static XBGallery *__sharedXBGallery = nil;
     return request;
 }
 
-- (XBCacheRequest *)uploadImages:(NSArray *)images withCompletion:(XBGMultipleImageUploaded)completeBlock
+- (void)uploadImages:(NSArray *)images withCompletion:(XBGMultipleImageUploaded)completeBlock
 {
-    NSMutableArray *arrayImage = [@[] mutableCopy];
+    arrayImage = [@[] mutableCopy];
     for (UIImage *img in images)
     {
-        [arrayImage addObject:[@{@"image": img} mutableCopy]];
+        [arrayImage addObject:[@{@"image": [img copy]} mutableCopy]];
     }
-    [self uploadImageOneByOne:arrayImage withComplete:completeBlock];
+    self.multiCompleteBlock = completeBlock;
+    [self uploadImageOneByOne:arrayImage withComplete:multiCompleteBlock];
 }
 
 - (void)uploadImageOneByOne:(NSMutableArray *)arrayImage withComplete:(XBGMultipleImageUploaded)completeBlock
@@ -70,7 +81,7 @@ static XBGallery *__sharedXBGallery = nil;
         {
             [self uploadImage:information[@"image"] withCompletion:^(NSDictionary *responseData, int photoid) {
                 information[@"id"] = @(photoid);
-                [self uploadImageOneByOne:arrayImage withComplete:completeBlock];
+                [self uploadImageOneByOne:arrayImage withComplete:multiCompleteBlock];
             }];
             found = YES;
             break;

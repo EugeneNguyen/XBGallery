@@ -30,7 +30,7 @@ typedef void (^XBGImageGetInformation)(NSDictionary * responseData);
 
 - (XBCacheRequest *)uploadImage:(UIImage *)image withCompletion:(XBGImageUploaded)completeBlock;
 - (XBCacheRequest *)uploadImageURL:(NSString *)url withCompletion:(XBGImageUploaded)completeBlock;
-- (XBCacheRequest *)uploadImages:(NSArray *)images withCompletion:(XBGMultipleImageUploaded)completeBlock;
+- (void)uploadImages:(NSArray *)images withCompletion:(XBGMultipleImageUploaded)completeBlock;
 
 - (NSURL *)urlForID:(int)imageid isThumbnail:(BOOL)isThumbnail;
 - (NSURL *)urlForID:(int)imageid size:(CGSize)size;
