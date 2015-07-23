@@ -47,7 +47,7 @@ static XBGallery *__sharedXBGallery = nil;
 
 - (XBCacheRequest *)uploadImageURL:(NSString *)url withCompletion:(XBGImageUploaded)completeBlock
 {
-    NSString *urlRequest = [NSString stringWithFormat:@"%@/plusgallery/services/addphoto", host];
+    NSString *urlRequest = [NSString stringWithFormat:@"%@/plusgallery/services/upload_by_url", host];
     XBCacheRequest *request = XBCacheRequest(urlRequest);
     [request setDataPost:[@{@"url": url} mutableCopy]];
     request.disableCache = YES;
@@ -79,10 +79,20 @@ static XBGallery *__sharedXBGallery = nil;
         }
         else
         {
-            [self uploadImage:information[@"image"] withCompletion:^(NSDictionary *responseData, int photoid) {
-                information[@"id"] = @(photoid);
-                [self uploadImageOneByOne:arrayImage withComplete:multiCompleteBlock];
-            }];
+            if ([information[@"image"] isKindOfClass:[UIImage class]])
+            {
+                [self uploadImage:information[@"image"] withCompletion:^(NSDictionary *responseData, int photoid) {
+                    information[@"id"] = @(photoid);
+                    [self uploadImageOneByOne:arrayImage withComplete:multiCompleteBlock];
+                }];
+            }
+            else if ([information[@"image"] isKindOfClass:[NSString class]])
+            {
+                [self uploadImageURL:information[@"image"] withCompletion:^(NSDictionary *responseData, int imageID) {
+                    information[@"id"] = @(imageID);
+                    [self uploadImageOneByOne:arrayImage withComplete:multiCompleteBlock];
+                }];
+            }
             found = YES;
             break;
         }
