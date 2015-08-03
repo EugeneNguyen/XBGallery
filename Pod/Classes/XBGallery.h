@@ -12,6 +12,7 @@
 #import "NSObject+XBGallery.h"
 #import "UIImageView+XBGallery.h"
 #import "UIImage+XBGallery.h"
+#import "XBImageView.h"
 
 @class XBCacheRequest;
 

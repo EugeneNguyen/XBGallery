@@ -68,9 +68,10 @@ static XBGallery *__sharedXBGallery = nil;
     [self uploadImageOneByOne:arrayImage withComplete:multiCompleteBlock];
 }
 
-- (void)uploadImageOneByOne:(NSMutableArray *)arrayImage withComplete:(XBGMultipleImageUploaded)completeBlock
+- (void)uploadImageOneByOne:(NSMutableArray *)_arrayImage withComplete:(XBGMultipleImageUploaded)completeBlock
 {
     BOOL found = NO;
+    arrayImage = [_arrayImage copy];
     for (NSMutableDictionary *information in arrayImage)
     {
         if (information[@"id"])
@@ -112,7 +113,7 @@ static XBGallery *__sharedXBGallery = nil;
 - (NSURL *)urlForID:(int)imageid size:(CGSize)size
 {
     CGFloat screenScale = [[UIScreen mainScreen] scale];
-    NSString *path = [NSString stringWithFormat:@"%@/plusgallery/services/showbyid?id=%d&width=%f&height=%f", self.host, imageid, size.width * screenScale, size.height * screenScale];
+    NSString *path = [NSString stringWithFormat:@"%@/plusgallery/services/showbyid?id=%d&width=%f&height=%f&keep_ratio=1", self.host, imageid, size.width * screenScale, size.height * screenScale];
     return [NSURL URLWithString:path];
 }
 
